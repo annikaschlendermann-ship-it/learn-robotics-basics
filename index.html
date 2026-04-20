@@ -166,7 +166,7 @@
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: max-height 0.4s ease, opacity 0.3s ease;
+    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
     margin-left: 3rem;
     border-left: 1px solid var(--border);
     border-right: 1px solid var(--border);
@@ -1287,13 +1287,14 @@
 
   function toggleDetail(id) {
     const el = document.getElementById(id);
-    if (el.style.maxHeight && el.style.maxHeight !== '0px') {
+    if (el.dataset.open === 'true') {
       el.style.maxHeight = '0px';
       el.style.opacity = '0';
+      el.dataset.open = 'false';
     } else {
-      el.style.maxHeight = el.scrollHeight + 'px';
+      el.style.maxHeight = '4000px';
       el.style.opacity = '1';
-      el.style.transition = 'max-height 0.35s ease, opacity 0.25s ease';
+      el.dataset.open = 'true';
     }
   }
 
