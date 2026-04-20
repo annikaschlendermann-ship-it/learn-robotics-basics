@@ -363,6 +363,21 @@
   .gloss-card[data-hidden="true"] { display: none; }
 
   /* ── TA BRIDGE ── */
+  .bridge-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .bridge-section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--accent4);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255,209,102,0.2);
+  }
+
   .bridge-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -391,6 +406,147 @@
   }
 
   .bridge-a strong { color: var(--text); }
+
+  /* Sourcing subsections */
+  .source-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .source-block-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .source-steps {
+    margin-bottom: 1rem;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .source-steps li {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .source-steps li::before {
+    content: attr(data-step);
+    position: absolute;
+    left: 0;
+    color: var(--accent4);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    top: 0.1em;
+  }
+
+  .source-steps li strong { color: var(--text); }
+
+  .link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+  }
+
+  .src-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(0,229,255,0.07);
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 4px;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    transition: background 0.15s;
+  }
+
+  .src-link:hover { background: rgba(0,229,255,0.15); }
+  .src-link.yellow { color: var(--accent4); border-color: rgba(255,209,102,0.25); background: rgba(255,209,102,0.06); }
+  .src-link.yellow:hover { background: rgba(255,209,102,0.13); }
+  .src-link.green { color: var(--accent3); border-color: rgba(168,255,120,0.25); background: rgba(168,255,120,0.06); }
+  .src-link.green:hover { background: rgba(168,255,120,0.13); }
+  .src-link.red { color: var(--accent2); border-color: rgba(255,77,109,0.25); background: rgba(255,77,109,0.06); }
+  .src-link.red:hover { background: rgba(255,77,109,0.13); }
+
+  /* PhD term explanations */
+  .phd-terms {
+    margin-top: 0.8rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.8rem;
+  }
+
+  .phd-terms-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .phd-term {
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .phd-term-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.55rem 0.8rem;
+    background: rgba(168,255,120,0.05);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .phd-term-header:hover { background: rgba(168,255,120,0.1); }
+
+  .phd-term-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent3);
+    font-weight: 700;
+  }
+
+  .phd-term-arrow {
+    font-size: 0.6rem;
+    color: var(--muted);
+    transition: transform 0.2s;
+  }
+
+  .phd-term-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    opacity: 0;
+  }
+
+  .phd-term-body-inner {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .phd-term-body-inner strong { color: var(--text); }
 
   /* section headers */
   .section-header {
@@ -468,6 +624,30 @@
         <p><strong>What it is:</strong> The robot listens to a spoken or typed instruction — "pick up the red box and put it on the shelf" — and converts it into a plan it can act on. This is done by large language models (LLMs), the same underlying technology as ChatGPT.</p>
         <p><strong>Why it matters at Flexion:</strong> Flexion's platform is described as combining <em>"natural language task comprehension"</em> as the top layer, so the robot doesn't need to be manually reprogrammed for every new job. A warehouse worker can just tell it what to do.</p>
         <p><strong>What PhDs might ask about:</strong> Prompt engineering for robotic planning, chain-of-thought reasoning, grounding language in physical actions (called "language grounding").</p>
+        <div class="phd-terms">
+          <div class="phd-terms-label">// Term explanations — click to expand</div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Prompt engineering for robotic planning</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Designing the exact structure and wording of instructions you give an LLM so it reliably outputs <strong>valid, executable robot action sequences</strong> — not just natural language. E.g., "You are a robot planner. Output only a JSON array of actions from the allowed set." The challenge: LLMs were trained on human text, not robot APIs, so they need guidance to stay within what a robot can actually do.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Chain-of-thought reasoning</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Making an LLM <strong>"think step by step"</strong> before giving a final answer — rather than jumping straight to output. For robots: "First identify the target object → determine its 3D position → plan the arm trajectory → output the action." This dramatically improves reliability on multi-step tasks. PhDs debate when chain-of-thought is needed vs. overkill, and whether it generalizes beyond training distribution.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Language grounding</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Connecting abstract words to <strong>concrete, perceivable things the robot can act on</strong>. When a human says "pick up the red mug near the sink," every word needs to map to something in the robot's sensor data. Words like "near," "heavy," or "fragile" have no inherent meaning to a robot — grounding is the process of giving them one, usually by linking language to visual observations or physical properties. A core open problem in robotics AI.</div></div>
+          </div>
+        </div>
         <div class="tags">
           <span class="tag purple">LLM</span>
           <span class="tag purple">Instruction Following</span>
@@ -494,6 +674,31 @@
         <p><strong>What it is:</strong> VLA models are AI models that take in <em>visual input</em> (what cameras see), <em>language context</em> (what the robot has been told), and output <em>actions</em> (move arm left, close gripper). It's the bridge between understanding and movement.</p>
         <p><strong>Ayça Takmaz's expertise lives here.</strong> Her PhD work (ETH Zurich / Google / NVIDIA) focused on 3D scene understanding — teaching computers to understand what objects are, where they are in 3D space, and what they can be used for (called "affordance understanding"). Her paper <em>OpenMask3D</em> allows robots to identify any object by description, not just a fixed list.</p>
         <p><strong>Synthetic training data:</strong> Flexion trains these models inside simulators, generating huge amounts of fake-but-realistic data, rather than relying on expensive real-world demonstrations. This is a key differentiator.</p>
+        <p><strong>What PhDs might ask about:</strong> Affordance understanding, open-vocabulary detection, sim-to-real domain gap for visual inputs, data efficiency in VLA training.</p>
+        <div class="phd-terms">
+          <div class="phd-terms-label">// Term explanations — click to expand</div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Affordance understanding</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Recognizing not just <strong>what an object is, but what you can do with it</strong>. A door handle affords "grasping and pulling." A flat surface affords "placing things on it." Ayça Takmaz's SceneFun3D work enables robots to identify these functional properties from 3D scans — critical for manipulation in real environments where the robot can't have been pre-programmed for every possible object.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Open-vocabulary detection</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Identifying any object by <strong>free-text description</strong> rather than a fixed list of categories. Traditional object detectors recognize a set of ~80 known classes (COCO dataset). Open-vocabulary models like OpenMask3D can find "the yellow mug with a chipped handle" — something never seen in training data — by leveraging vision-language models. This is what makes robots generalizable to new environments.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Sim-to-real domain gap (visual)</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Training VLA models on <strong>synthetic rendered images and deploying on real camera feeds</strong> introduces a "domain gap" — differences in lighting, texture, noise, and color that can cause the model to fail. Bridged by photorealistic rendering (Flexion uses high-fidelity simulators), domain randomization (varying lighting/textures during training), and fine-tuning on small amounts of real data. Still an open research challenge.</div></div>
+          </div>
+        </div>
         <div class="tags">
           <span class="tag">VLA</span>
           <span class="tag">3D Scene Understanding</span>
@@ -521,6 +726,38 @@
         <p><strong>What it is:</strong> Instead of being programmed with rules ("if obstacle, turn left"), the robot is rewarded for good outcomes and penalized for bad ones — and it figures out the rules itself. Think of teaching a dog: you don't explain physics, you give treats.</p>
         <p><strong>Nikita Rudin's breakthrough paper</strong> <em>"Learning to Walk in Minutes"</em> (CoRL 2022, 1,150+ citations) showed that training thousands of robots <em>simultaneously in simulation</em> on a single GPU could compress months of training into minutes. This is the core of Flexion's speed advantage — they call it "massively parallel RL."</p>
         <p><strong>David Hoeller</strong> extended this: his <em>ANYmal Parkour</em> paper (Science Robotics 2024) showed RL-trained robots can do athletic, agile movements — jumping, climbing — behaviors once thought impossible to program manually.</p>
+        <p><strong>What PhDs might ask about:</strong> PPO vs. SAC policy gradient methods, curriculum learning, reward shaping, massively parallel training infrastructure.</p>
+        <div class="phd-terms">
+          <div class="phd-terms-label">// Term explanations — click to expand</div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">PPO (Proximal Policy Optimization)</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">The most common RL algorithm used for robot locomotion (including by Flexion's founders). PPO <strong>updates the policy in small, conservative steps</strong> — it clips updates so the new policy never strays too far from the old one, preventing catastrophic performance collapse. Think of it as cautious improvement: keep what works, refine gradually. The "proximal" in the name refers to staying close to the previous policy.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Curriculum learning</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Training on <strong>progressively harder tasks</strong> rather than throwing the robot into full difficulty from day one. Example sequence: flat ground → slight slopes → stairs → stairs with obstacles → stairs with obstacles and dynamic pushes. Without curriculum learning, the robot almost never discovers successful behaviors by accident when the task is hard. With it, each stage provides a useful starting point for the next.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Reward shaping</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Designing <strong>what the robot gets rewarded for</strong> during training — arguably the hardest part of applied RL. Too sparse (reward only for reaching the goal): the robot almost never succeeds early enough to learn. Too dense (reward every joint movement): the robot finds bizarre exploits that maximize points without actually solving the task. Good reward shaping guides learning without over-constraining the solution. PhDs spend careers on this.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Massively parallel training</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Running <strong>thousands of robot simulations simultaneously on a single GPU</strong>. Rudin's "Learning to Walk in Minutes" ran 4,096 virtual robots in parallel — collecting millions of timesteps of experience per second of real time. This is why training that once took days or weeks now takes minutes. NVIDIA Isaac Lab (co-created by Flexion's founders) is the tool that makes this possible. It's Flexion's core speed advantage.</div></div>
+          </div>
+        </div>
         <div class="tags">
           <span class="tag red">Deep RL</span>
           <span class="tag red">Massively Parallel Training</span>
@@ -548,6 +785,38 @@
         <p><strong>What it is:</strong> A humanoid robot has ~30+ joints. Whole-body control means coordinating all of them at once, not just the arm or just the legs. A transformer (the same architecture behind GPT) processes all joint states together and outputs a coherent motion plan.</p>
         <p><strong>The sim-to-real problem:</strong> Physics in simulation is never 100% identical to the real world. Flexion specializes in making models trained in simulation transfer reliably to real hardware — Nikita Rudin's research specifically addressed this by training across randomized simulation conditions so the robot becomes robust to real-world variation.</p>
         <p><strong>Julian Nubert</strong> bridges into this: his work on <em>state estimation</em> and LiDAR-based localization gives the robot an accurate, real-time sense of where it and objects around it are — essential for whole-body control to work safely.</p>
+        <p><strong>What PhDs might ask about:</strong> Domain randomization, the sim-to-real gap, MPC vs. learned control trade-offs, state estimation and sensor fusion.</p>
+        <div class="phd-terms">
+          <div class="phd-terms-label">// Term explanations — click to expand</div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Domain randomization</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Intentionally <strong>varying simulation parameters during training</strong> — robot mass, friction coefficients, motor delay, ground texture, disturbance forces — so the robot learns a policy robust to that variation. The insight: if you train across enough randomized conditions, the real world is just one more "random domain." It's the main technique for bridging simulation to reality without needing a perfect simulator.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Sim-to-real gap</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">The discrepancy between <strong>how physics works in simulation vs. the real world</strong>. Friction models are approximate. Motors have latency. Joints have backlash. When a policy trained purely in simulation is deployed on real hardware, these mismatches cause failure. Bridging strategies: domain randomization, system identification (measuring the real robot and updating the sim to match), and actuator modeling. Flexion's technical core competency.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">MPC vs. learned control</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner"><strong>Model Predictive Control (MPC)</strong>: uses an explicit physics model to predict future states and optimize actions — precise and interpretable, but computationally expensive and brittle when the model is wrong. <strong>Learned control (RL)</strong>: learns a direct policy from experience — fast at runtime, handles model uncertainty implicitly, but requires massive training. Flexion bets on learned control at scale. ETH RSL historically blended both — this is the active debate in the field.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">State estimation</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Fusing data from <strong>multiple sensors (IMU, joint encoders, cameras, LiDAR) to estimate the robot's current physical state</strong> — position, velocity, orientation, contact forces — accurately and in real time. The policy only works if it knows where the robot is and what it's doing. Julian Nubert's PhD focused on the hard cases: when can state estimation be trusted, and when is it likely wrong?</div></div>
+          </div>
+        </div>
         <div class="tags">
           <span class="tag">Whole-Body Control</span>
           <span class="tag">Transformer Architecture</span>
@@ -575,6 +844,45 @@
         <p><strong>What it is:</strong> Before the robot can do anything, it needs to know where it is and what's around it. LiDAR (laser-based distance sensors) creates a precise 3D point cloud of the environment. SLAM (Simultaneous Localization and Mapping) uses that data to build a live map and track the robot's position within it — simultaneously.</p>
         <p><strong>Julian Nubert</strong> is Flexion's perception lead. His PhD research produced papers on self-supervised LiDAR odometry and localizability estimation — essentially: "when can the robot trust its own position estimate, and when should it be cautious?" This is critical safety-adjacent work for real-world deployment.</p>
         <p><strong>Ayça Takmaz</strong> adds the object layer: her <em>SceneFun3D</em> (CVPR 2024, Oral — a top honor) enables robots to understand not just that an object exists, but what actions it affords — is it a handle? A surface to place things on?</p>
+        <p><strong>What PhDs might ask about:</strong> LiDAR odometry, point cloud processing, SLAM algorithms, 3D instance segmentation, localizability estimation.</p>
+        <div class="phd-terms">
+          <div class="phd-terms-label">// Term explanations — click to expand</div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">LiDAR odometry</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Estimating <strong>how the robot has moved by comparing successive LiDAR scans</strong>. If scan A and scan B look slightly shifted, you can infer the robot moved by that amount. Works like GPS-free positioning using laser geometry — critical indoors and in GPS-denied environments. Error accumulates over time (called drift), so it's typically fused with other sensors via SLAM to correct it.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Point cloud processing</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">A point cloud is a <strong>set of 3D coordinates where LiDAR beams hit surfaces</strong>. Processing involves: filtering noise, downsampling for speed, finding planes and edges, detecting objects, and computing surface normals. It's the raw input to almost every 3D perception pipeline. Unlike images, point clouds are unordered and sparse — standard CNNs don't apply directly, requiring specialized architectures (PointNet, VoxelNet, etc.).</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">SLAM (Simultaneous Localization and Mapping)</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">The chicken-and-egg problem: <strong>you need a map to localize, but you need localization to build a map</strong>. SLAM solves both at once by maintaining a probabilistic estimate of the robot's position while incrementally building the map from sensor readings. Classic approaches use graph optimization (iSAM, GTSAM). Modern approaches (like Nubert's) use deep learning for better robustness to dynamic environments and perceptual aliasing.</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">3D instance segmentation</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Identifying and <strong>separating individual object instances in 3D space</strong> — not just "there is a chair here" but "here is chair #1, here is chair #2, and here is the table." Harder than 2D because 3D data is sparse and objects often partially occlude each other. Takmaz's SceneFun3D (CVPR 2024, Oral) goes further: it also labels what each object affords, enabling task-relevant queries like "find a surface I can place this box on."</div></div>
+          </div>
+          <div class="phd-term">
+            <div class="phd-term-header" onclick="toggleTerm(this)">
+              <span class="phd-term-name">Localizability estimation</span>
+              <span class="phd-term-arrow">▼</span>
+            </div>
+            <div class="phd-term-body"><div class="phd-term-body-inner">Predicting <strong>when LiDAR-based localization will be reliable vs. unreliable</strong> — before committing to a position estimate. In a featureless corridor or open field, there aren't enough distinct scan features to pin down location precisely. Nubert's PhD contribution: giving robots a self-awareness about their own localization confidence, so they can be cautious when uncertain rather than confidently wrong. Safety-critical for real-world deployment.</div></div>
+          </div>
+        </div>
         <div class="tags">
           <span class="tag green">LiDAR</span>
           <span class="tag green">SLAM</span>
@@ -884,49 +1192,147 @@
 ══════════════════════════════════════════ -->
 <div id="tab-bridge" class="tab-content">
   <div class="section-header">// Bridging Technical Knowledge into TA Practice</div>
-  <div class="bridge-grid">
 
-    <div class="bridge-card">
-      <div class="bridge-q">Q: Why does a TA person need to understand RL and sim-to-real?</div>
-      <div class="bridge-a">To assess candidates credibly and write accurate job descriptions. If a role requires <strong>"experience with sim-to-real transfer,"</strong> understanding what that means lets you screen CVs, ask meaningful follow-up questions, and know why a researcher from NVIDIA Isaac Lab is more relevant than one from a pure software ML background. <strong>Confidence as TA improves dramatically when you can hold a 5-minute technical conversation.</strong></div>
+  <!-- WHY THIS ROLE IS DIFFERENT -->
+  <div class="bridge-section">
+    <div class="bridge-section-title">▸ Why this role is different</div>
+    <div class="bridge-grid">
+      <div class="bridge-card">
+        <div class="bridge-q">Why does a TA person need to understand RL and sim-to-real?</div>
+        <div class="bridge-a">To assess candidates credibly and write accurate job descriptions. If a role requires <strong>"experience with sim-to-real transfer,"</strong> understanding what that means lets you screen CVs, ask meaningful follow-up questions, and know why a researcher from NVIDIA Isaac Lab is more relevant than one from a pure software ML background. <strong>Confidence as TA improves dramatically when you can hold a 5-minute technical conversation.</strong></div>
+      </div>
+      <div class="bridge-card">
+        <div class="bridge-q">What makes Flexion's talent needs unusual vs. a typical tech startup?</div>
+        <div class="bridge-a">The talent pool is extremely small. Qualified candidates worldwide who have <strong>sim-to-real RL + humanoid robot experience + real hardware deployment</strong> likely number in the hundreds globally. This is not a Boolean LinkedIn search. It requires relationship-based sourcing, conference presence, and working closely with the founders who personally know most senior candidates. Standard TA pipelines won't work.</div>
+      </div>
     </div>
-
-    <div class="bridge-card">
-      <div class="bridge-q">Q: How do you source PhDs in this niche?</div>
-      <div class="bridge-a">Target specific labs: <strong>ETH RSL (Marco Hutter), CMU Robotics, MIT CSAIL, Berkeley BAIR, Stanford AI Lab, TU Berlin.</strong> Search by paper venue: ICRA, IROS, CoRL, NeurIPS, CVPR. On LinkedIn, filter by keywords like "reinforcement learning locomotion," "sim-to-real," "legged robotics," "manipulation policy." Conference attendee lists (ICRA has public programs) are goldmines. GitHub stars on repos like legged_gym or Isaac Lab can reveal active researchers.</div>
-    </div>
-
-    <div class="bridge-card">
-      <div class="bridge-q">Q: What signals differentiate a strong robotics RL researcher from a weak one?</div>
-      <div class="bridge-a"><strong>Strong signals:</strong> Published in Science Robotics, ICRA, CoRL, or NeurIPS. Code on GitHub with stars. "Sim-to-real" experience — not just simulation. Work with real hardware. First or second author on papers (not just a large team). Contributed to open-source tools (Isaac Lab, legged_gym, Open3D SLAM). <strong>Weak signals:</strong> Only pure ML with no robotics application. No real hardware experience. Only industry roles without research output.</div>
-    </div>
-
-    <div class="bridge-card">
-      <div class="bridge-q">Q: What makes Flexion's talent needs unusual vs. a typical tech startup?</div>
-      <div class="bridge-a">The talent pool is extremely small. Qualified candidates worldwide who have <strong>sim-to-real RL + humanoid robot experience + real hardware deployment</strong> likely number in the hundreds globally. This is not a Boolean LinkedIn search. It requires relationship-based sourcing, conference presence, and working closely with the founders who personally know most senior candidates. Standard TA pipelines won't work — the role demands a research community understanding.</div>
-    </div>
-
-    <div class="bridge-card">
-      <div class="bridge-q">Q: A PhD asks you "what's your opinion on using model-based vs. learning-based control?" — how do you respond?</div>
-      <div class="bridge-a">Acknowledge it's an active debate in the field. Mention that Flexion's approach is RL-centric — which is why they value candidates who've worked with sim-to-real pipelines. Note that the ETH RSL (where the founders came from) historically blended both but Flexion is betting on <strong>end-to-end learned control at scale.</strong> Then genuinely ask their perspective — great candidates love explaining this and it builds instant credibility.</div>
-    </div>
-
-    <div class="bridge-card">
-      <div class="bridge-q">Q: How do you explain Flexion's value proposition to a passive candidate who doesn't know them?</div>
-      <div class="bridge-a"><strong>"Flexion is building the software brain for humanoid robots — not the hardware, the intelligence stack."</strong> The founders co-created NVIDIA Isaac Lab, the simulation tool the entire industry trains on. They're funded by NVentures (NVIDIA's VC arm), DST Global, and Prosus — $57M+ Series A. They've already deployed sim-trained locomotion on real humanoid robots. This is the Zurich team most likely to define how humanoids are programmed for the next decade. That's the hook for a researcher who wants impact.</div>
-    </div>
-
-    <div class="bridge-card">
-      <div class="bridge-q">Q: What should a recruiter know before screening a robotics RL researcher?</div>
-      <div class="bridge-a">Read their papers — at least the abstract and introduction. Know the difference between quadruped work (4-legged, Flexion's research background) and humanoid work (2-legged, their current target). Ask about sim-to-real gaps: <strong>"What was the biggest transfer failure you experienced, and how did you address it?"</strong> Ask about compute scale: <strong>"What training infrastructure did you use?"</strong> These two questions will reveal depth quickly.</div>
-    </div>
-
-    <div class="bridge-card">
-      <div class="bridge-q">Q: How does Flexion's tech position affect employer branding?</div>
-      <div class="bridge-a">The NVIDIA-ETH-Science Robotics pedigree of the founders is an <strong>elite signal</strong> in the robotics community. Branding should lean into: access to state-of-the-art compute, real hardware deployment (not just simulation), ETH co-founder network, and the rare opportunity to work on full-stack humanoid autonomy — not just one layer. Candidates from academic labs often want their work to reach the real world. That's Flexion's pitch.</div>
-    </div>
-
   </div>
+
+  <!-- SOURCING PLAYBOOK -->
+  <div class="bridge-section">
+    <div class="bridge-section-title">▸ Sourcing playbook — where & how to find candidates</div>
+
+    <!-- GitHub -->
+    <div class="source-block">
+      <div class="source-block-title">🐙 GitHub — Find researchers via their code</div>
+      <ul class="source-steps">
+        <li data-step="1.">Go to a key repo (see links below). Open the <strong>Contributors</strong> tab — these are the people who actively built the tool. Sort by commits to find core contributors.</li>
+        <li data-step="2.">Check the <strong>Stargazers</strong> list of repos like legged_gym or Isaac Lab. Researchers who star niche tools are active in the field — click profiles, check if they have a university or lab affiliation.</li>
+        <li data-step="3.">Search GitHub for <strong>relevant topics</strong>: go to github.com/topics/reinforcement-learning, /legged-robots, /robot-learning, /sim-to-real. Browse repos and their authors.</li>
+        <li data-step="4.">On a researcher's profile, look for their <strong>website or email in the bio</strong>, or check their pinned repos for a personal site link. Many academics list institutional emails.</li>
+        <li data-step="5.">Use GitHub search: <code>sim-to-real language:Python stars:>20</code> or <code>humanoid locomotion reinforcement-learning</code> to surface active projects and their creators.</li>
+      </ul>
+      <div class="link-row">
+        <a class="src-link" href="https://github.com/leggedrobotics/legged_gym" target="_blank">leggedrobotics/legged_gym</a>
+        <a class="src-link" href="https://github.com/isaac-sim/IsaacLab" target="_blank">isaac-sim/IsaacLab</a>
+        <a class="src-link" href="https://github.com/OpenMask3D/openmask3d" target="_blank">OpenMask3D/openmask3d</a>
+        <a class="src-link" href="https://github.com/leggedrobotics/open3d_slam" target="_blank">leggedrobotics/open3d_slam</a>
+        <a class="src-link" href="https://github.com/leggedrobotics" target="_blank">leggedrobotics org →</a>
+        <a class="src-link" href="https://github.com/ethz-asl" target="_blank">ethz-asl org →</a>
+        <a class="src-link" href="https://github.com/ethz-ait" target="_blank">ethz-ait org →</a>
+      </div>
+    </div>
+
+    <!-- Academic papers -->
+    <div class="source-block">
+      <div class="source-block-title">📄 Academic papers — Find researchers via their research</div>
+      <ul class="source-steps">
+        <li data-step="1.">Search <strong>Semantic Scholar</strong> or <strong>Google Scholar</strong> for terms like "sim-to-real locomotion," "humanoid reinforcement learning," "legged robot policy." Authors of highly-cited recent papers are prime candidates.</li>
+        <li data-step="2.">Browse <strong>conference proceedings</strong> by venue. ICRA and IROS have public paper lists. Filter by "locomotion," "manipulation," or "sim-to-real" to find authors. CoRL (Conference on Robot Learning) is especially relevant.</li>
+        <li data-step="3.">On a paper's Google Scholar or Semantic Scholar page, click the author names — their profiles show all publications, affiliations, and often a contact link. Check co-authors too; interesting collaborators often cluster.</li>
+        <li data-step="4.">Search <strong>arXiv cs.RO</strong> (robotics preprints) for the latest unpublished work — researchers posting here are actively working in the field right now, not just historicaly relevant.</li>
+        <li data-step="5.">Look at <strong>who cites Flexion's founders' papers</strong> (Rudin et al. 2022, Hoeller et al. 2024). Citing authors are engaging directly with the same research direction — high signal of relevance.</li>
+      </ul>
+      <div class="link-row">
+        <a class="src-link yellow" href="https://www.semanticscholar.org/" target="_blank">Semantic Scholar</a>
+        <a class="src-link yellow" href="https://arxiv.org/list/cs.RO/recent" target="_blank">arXiv cs.RO (recent)</a>
+        <a class="src-link yellow" href="https://2025.ieee-icra.org/" target="_blank">ICRA 2025</a>
+        <a class="src-link yellow" href="https://iros25.org/" target="_blank">IROS 2025</a>
+        <a class="src-link yellow" href="https://www.corl.org/" target="_blank">CoRL</a>
+        <a class="src-link yellow" href="https://ieeexplore.ieee.org/" target="_blank">IEEE Xplore</a>
+        <a class="src-link yellow" href="https://proceedings.mlr.press/" target="_blank">PMLR (CoRL papers)</a>
+        <a class="src-link yellow" href="https://scholar.google.com/" target="_blank">Google Scholar</a>
+      </div>
+    </div>
+
+    <!-- Zurich & Switzerland -->
+    <div class="source-block">
+      <div class="source-block-title">📍 Zurich & Switzerland — Proximity sourcing</div>
+      <ul class="source-steps">
+        <li data-step="1.">Start with <strong>ETH RSL</strong> (Marco Hutter's lab) — the direct origin of Flexion's founders. Their team page lists current PhD students and postdocs. Many are aware of Flexion and personally know the founders.</li>
+        <li data-step="2.">Check <strong>ETH ASL</strong> (Autonomous Systems Lab) — Roland Siegwart's group, focused on autonomous navigation and state estimation. Julian Nubert's background. Strong SLAM and perception researchers.</li>
+        <li data-step="3."><strong>UZH Robotics and Perception Group (RPG)</strong> — Prof. Davide Scaramuzza's lab, focused on vision-based autonomy and drone racing. Event cameras, fast perception, policy learning. World-class group.</li>
+        <li data-step="4."><strong>EPFL BioRob</strong> (Lausanne, ~50 min from Zurich) — legged and humanoid robot locomotion. Separate from ETH but directly relevant talent pool.</li>
+        <li data-step="5.">Check ETH spinoffs and alumni companies: <strong>ANYbotics</strong> (RSL spinoff, quadruped robots), <strong>Ascento</strong> (RSL spinoff, wheeled-legged robots), <strong>Verity</strong> (indoor drones). Employees often move between academia and Zurich-area startups.</li>
+      </ul>
+      <div class="link-row">
+        <a class="src-link green" href="https://rsl.ethz.ch/" target="_blank">ETH RSL (Hutter)</a>
+        <a class="src-link green" href="https://asl.ethz.ch/" target="_blank">ETH ASL (Siegwart)</a>
+        <a class="src-link green" href="https://ait.ethz.ch/" target="_blank">ETH AIT Lab</a>
+        <a class="src-link green" href="https://rpg.ifi.uzh.ch/" target="_blank">UZH RPG (Scaramuzza)</a>
+        <a class="src-link green" href="https://www.epfl.ch/labs/biorob/" target="_blank">EPFL BioRob</a>
+        <a class="src-link green" href="https://nccr-robotics.ch/" target="_blank">NCCR Robotics (Swiss hub)</a>
+        <a class="src-link green" href="https://www.anybotics.com/" target="_blank">ANYbotics</a>
+        <a class="src-link green" href="https://www.ascento.ch/" target="_blank">Ascento</a>
+      </div>
+    </div>
+
+    <!-- LinkedIn -->
+    <div class="source-block">
+      <div class="source-block-title">💼 LinkedIn — Search strategy</div>
+      <ul class="source-steps">
+        <li data-step="1."><strong>Keyword filters:</strong> Search "reinforcement learning locomotion," "sim-to-real," "legged robotics," "manipulation policy," "robot learning," "Isaac Lab," "humanoid control." Combine with location: "Zurich," "Switzerland," "ETH Zurich."</li>
+        <li data-step="2."><strong>School filter:</strong> Filter by ETH Zurich, EPFL, TU Munich, CMU, MIT, UC Berkeley, Stanford as alma mater. Add "PhD" in the title/keyword filter to narrow to doctoral-level researchers.</li>
+        <li data-step="3."><strong>Follow lab company pages:</strong> ETH RSL, ETH ASL, ANYbotics, NVIDIA Research. Their followers and employees are often qualified leads or one connection away from them.</li>
+        <li data-step="4."><strong>Conference attendee lists:</strong> ICRA, CoRL, and IROS often publish attendee or speaker lists. Import names into LinkedIn search. Anyone presenting at these conferences is actively publishing.</li>
+        <li data-step="5."><strong>Second-degree connections via founders:</strong> Ask Nikita, David, or Julian to introduce you to their network. A warm intro from a founder carries far more weight than a cold InMail for this caliber of researcher.</li>
+      </ul>
+      <div class="link-row">
+        <a class="src-link" href="https://www.linkedin.com/search/results/people/?keywords=reinforcement%20learning%20locomotion%20robotics&origin=GLOBAL_SEARCH_HEADER" target="_blank">LinkedIn: RL locomotion search</a>
+        <a class="src-link" href="https://www.linkedin.com/search/results/people/?keywords=sim-to-real%20robotics%20phd&geoUrn=%5B%22105117694%22%5D" target="_blank">LinkedIn: sim-to-real + Switzerland</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVALUATING CANDIDATES -->
+  <div class="bridge-section">
+    <div class="bridge-section-title">▸ Evaluating candidates — signal vs. noise</div>
+    <div class="bridge-grid">
+      <div class="bridge-card">
+        <div class="bridge-q">What signals differentiate a strong robotics RL researcher from a weak one?</div>
+        <div class="bridge-a">
+          <strong>Strong signals:</strong> Published in Science Robotics, ICRA, CoRL, or NeurIPS. Code on GitHub with stars. "Sim-to-real" in their work — not just simulation. Experience with real hardware. First or second author (not buried in a 20-person list). Contributed to open-source tools (Isaac Lab, legged_gym, Open3D SLAM).<br><br>
+          <strong>Weak signals:</strong> Only pure ML with no robotics application. No real hardware experience. Only industry roles without research output. Papers only in workshops, not main conferences.
+        </div>
+      </div>
+      <div class="bridge-card">
+        <div class="bridge-q">What should a recruiter know before screening a robotics RL researcher?</div>
+        <div class="bridge-a">Read their papers — at least the abstract and intro. Know the difference between <strong>quadruped work</strong> (4-legged, Flexion's research background) and <strong>humanoid work</strong> (2-legged, current target). Two questions that reveal depth fast:<br><br>
+        <strong>"What was the biggest sim-to-real transfer failure you experienced, and how did you address it?"</strong><br><br>
+        <strong>"What training infrastructure did you use — how many GPUs, how many parallel envs?"</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TALKING TO CANDIDATES -->
+  <div class="bridge-section">
+    <div class="bridge-section-title">▸ Talking to candidates</div>
+    <div class="bridge-grid">
+      <div class="bridge-card">
+        <div class="bridge-q">A PhD asks: "model-based vs. learning-based control — what's Flexion's take?"</div>
+        <div class="bridge-a">Acknowledge it's an active debate. Flexion's approach is <strong>RL-centric</strong> — which is why they value sim-to-real experience. ETH RSL historically blended both, but Flexion is betting on <strong>end-to-end learned control at scale.</strong> Then ask their perspective — great candidates love explaining this, and it builds instant credibility that you're a serious conversation partner, not just a recruiter.</div>
+      </div>
+      <div class="bridge-card">
+        <div class="bridge-q">How do you pitch Flexion to a passive candidate who doesn't know them?</div>
+        <div class="bridge-a"><strong>"Flexion is building the software brain for humanoid robots — not the hardware, the intelligence stack."</strong> The founders co-created NVIDIA Isaac Lab, the simulation tool the entire industry trains on. Funded by NVentures (NVIDIA's VC), DST Global, Prosus — $57M+ Series A. Already deployed sim-trained locomotion on real humanoid hardware. This is the Zurich team most likely to define how humanoids are programmed for the next decade.</div>
+      </div>
+      <div class="bridge-card">
+        <div class="bridge-q">How does Flexion's position affect employer branding?</div>
+        <div class="bridge-a">The NVIDIA-ETH-Science Robotics pedigree is an <strong>elite signal</strong> in the research community. Lean into: access to state-of-the-art compute, real hardware deployment (not just simulation), ETH co-founder network, and the rare chance to work on full-stack humanoid autonomy — not one narrow layer. Researchers from academic labs want their work to reach the real world. That's Flexion's pitch, and it's genuine.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -955,6 +1361,21 @@
     d.style.opacity = '0';
     d.style.transition = 'max-height 0.35s ease, opacity 0.25s ease';
   });
+
+  function toggleTerm(header) {
+    const body = header.nextElementSibling;
+    const arrow = header.querySelector('.phd-term-arrow');
+    const isOpen = body.style.maxHeight && body.style.maxHeight !== '0px';
+    if (isOpen) {
+      body.style.maxHeight = '0px';
+      body.style.opacity = '0';
+      arrow.style.transform = 'rotate(0deg)';
+    } else {
+      body.style.maxHeight = body.scrollHeight + 200 + 'px';
+      body.style.opacity = '1';
+      arrow.style.transform = 'rotate(180deg)';
+    }
+  }
 
   function filterGlossary(query) {
     const q = query.toLowerCase();
