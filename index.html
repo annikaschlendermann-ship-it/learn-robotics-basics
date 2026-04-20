@@ -522,6 +522,157 @@
   .l2 { border-left: 3px solid #4A90D9; }
   .l1 { border-left: 3px solid #56B4D3; }
 
+  /* ── HIRING ARCHITECTURE ── */
+  .scaling-intro {
+    max-width: 680px;
+    margin-bottom: 3rem;
+  }
+
+  .scaling-intro p {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .scaling-intro strong { color: var(--text); font-weight: 500; }
+
+  .scaling-section { margin-bottom: 3rem; }
+
+  .scaling-section-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .scaling-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+    background: var(--border);
+  }
+
+  .scaling-card {
+    background: var(--surface);
+    padding: 1.5rem;
+  }
+
+  .scaling-card-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.08em;
+  }
+
+  .scaling-card-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 0.7rem;
+    line-height: 1.3;
+  }
+
+  .scaling-card-body {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .scaling-card-body strong { color: var(--text); font-weight: 500; }
+
+  .pitfall-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-left: 3px solid rgba(0,0,0,0.08);
+  }
+
+  .pitfall-card.high { border-left-color: #D94F3D; }
+  .pitfall-card.medium { border-left-color: #C97B2A; }
+  .pitfall-card.low { border-left-color: #8A9DC0; }
+
+  .pitfall-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .pitfall-label.high { color: #D94F3D; }
+  .pitfall-label.medium { color: #C97B2A; }
+
+  .pitfall-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+
+  .pitfall-body {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .pitfall-body strong { color: var(--text); font-weight: 500; }
+
+  .principle-list {
+    list-style: none;
+    border: 1px solid var(--border);
+    background: var(--border);
+    display: grid;
+    gap: 1px;
+  }
+
+  .principle-item {
+    background: var(--surface);
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .principle-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    flex-shrink: 0;
+    padding-top: 0.15em;
+    min-width: 1.5rem;
+  }
+
+  .principle-content { flex: 1; }
+
+  .principle-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+  }
+
+  .principle-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .principle-desc strong { color: var(--text); font-weight: 500; }
+
   /* Scrollbar */
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
@@ -541,6 +692,7 @@
   <button class="tab-btn" onclick="showTab('founders')">Team & Research</button>
   <button class="tab-btn" onclick="showTab('glossary')">Glossary</button>
   <button class="tab-btn" onclick="showTab('bridge')">TA Bridge</button>
+  <button class="tab-btn" onclick="showTab('scaling')">Hiring Architecture</button>
 </nav>
 
 <!-- ══════════════════════════════════════════
@@ -1273,6 +1425,169 @@
         <div class="bridge-a">The NVIDIA-ETH-Science Robotics pedigree is an <strong>elite signal</strong> in the research community. Lean into: access to state-of-the-art compute, real hardware deployment (not just simulation), ETH co-founder network, and the rare chance to work on full-stack humanoid autonomy — not one narrow layer. Researchers from academic labs want their work to reach the real world. That's Flexion's pitch, and it's genuine.</div>
       </div>
     </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 5 – HIRING ARCHITECTURE
+══════════════════════════════════════════ -->
+<div id="tab-scaling" class="tab-content">
+  <div class="section-header">// Hiring Architecture — Building for Scale Without Losing Speed</div>
+
+  <div class="scaling-intro">
+    <p>Deep-tech teams grow differently. The first hires happen through founders' networks and shared conviction. The next fifty require something more deliberate — but <strong>not heavier</strong>. The goal is structure that serves speed: consistent decisions, low candidate drop-off, and a process engineers trust enough to actually participate in.</p>
+  </div>
+
+  <!-- FOUNDATIONS -->
+  <div class="scaling-section">
+    <div class="scaling-section-title">▸ Foundations — what to build before you need it</div>
+    <div class="scaling-grid">
+
+      <div class="scaling-card">
+        <div class="scaling-card-num">01 / Intake</div>
+        <div class="scaling-card-title">Define "great" before opening a role</div>
+        <div class="scaling-card-body">Never post a job until the hiring manager can answer: <strong>what does this person own in 6 months, and what does excellent look like at 12?</strong> In engineering-led orgs this step gets skipped — the result is 4 months of screening candidates against an implicit bar no one agreed on. A one-page intake doc (3–5 ranked criteria, must-haves vs. nice-to-haves) takes 30 minutes and saves weeks.</div>
+      </div>
+
+      <div class="scaling-card">
+        <div class="scaling-card-num">02 / Scorecard</div>
+        <div class="scaling-card-title">Evaluation by criteria, not impression</div>
+        <div class="scaling-card-body">Structured scorecards don't slow engineers down — they make engineers' time count. Each interviewer assesses 1–2 criteria only, with a 1–4 rating and a written evidence requirement. This eliminates <strong>"I just had a good feeling"</strong> as a hiring signal, reduces recency bias from the last candidate seen, and creates a defensible paper trail when a hire doesn't work out.</div>
+      </div>
+
+      <div class="scaling-card">
+        <div class="scaling-card-num">03 / Pipeline</div>
+        <div class="scaling-card-title">CRM before ATS — relationships before reqs</div>
+        <div class="scaling-card-body">In a community this small, every senior candidate will encounter Flexion 2–3 times before they're ready to move. Track every conversation: conference chats, paper compliments, referral intros. <strong>An ATS tracks applicants. A CRM builds the pipeline that feeds the ATS.</strong> Tools: Ashby (combines both), or Notion + Clay for early stage. Starting from zero at every search is the most expensive mistake in niche hiring.</div>
+      </div>
+
+      <div class="scaling-card">
+        <div class="scaling-card-num">04 / Compensation</div>
+        <div class="scaling-card-title">Leveling framework before the first equity dispute</div>
+        <div class="scaling-card-body">Startups skip leveling until someone finds out a colleague with less experience earns more. By then, trust is damaged and attrition risk is real. A simple 3-level framework (IC1/IC2/IC3 with salary bands and equity ranges) takes a day to build and prevents months of firefighting. <strong>Publish the bands internally</strong> — transparency is a retention tool in research-heavy teams who expect intellectual honesty in all things.</div>
+      </div>
+
+      <div class="scaling-card">
+        <div class="scaling-card-num">05 / Referrals</div>
+        <div class="scaling-card-title">Formalize the network before it becomes informal bias</div>
+        <div class="scaling-card-body">Founder networks produce excellent early hires — but left unmanaged, they create monocultures. <strong>Formalize referrals:</strong> ask for them systematically (not just when desperate), track source-of-hire by demographic, and set an explicit ceiling (e.g. no more than 40% of hires from any single source). Incentivize referrals with time off rather than cash — it attracts more thoughtful recommendations from researchers who don't want to stake their reputation on a bad refer.</div>
+      </div>
+
+      <div class="scaling-card">
+        <div class="scaling-card-num">06 / Metrics</div>
+        <div class="scaling-card-title">Four numbers that tell you if hiring is working</div>
+        <div class="scaling-card-body">Avoid metrics theater. Four numbers are enough at this stage: <strong>time-to-offer</strong> (should be ≤21 days from first contact), <strong>offer acceptance rate</strong> (below 80% = process or comp problem), <strong>pipeline-to-hire ratio by stage</strong> (where are candidates dropping?), and <strong>90-day retention rate</strong> (are hires surviving onboarding?). Review monthly with founders. Anything more is overhead, not signal.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PITFALLS -->
+  <div class="scaling-section">
+    <div class="scaling-section-title">▸ Pitfalls — where engineering-led hiring breaks down</div>
+    <div class="scaling-grid">
+
+      <div class="pitfall-card high">
+        <div class="pitfall-label high">Critical</div>
+        <div class="pitfall-title">The founder bottleneck</div>
+        <div class="pitfall-body">Every offer needs founder sign-off. This works at 5 hires. At 15 it slows everything to a crawl, and candidates notice. Fix: <strong>define a delegation threshold</strong> — founders approve role-opens and final offers above a certain level; TA and hiring manager handle everything in between. This isn't about losing control, it's about founders spending their credibility on the decisions that actually need it.</div>
+      </div>
+
+      <div class="pitfall-card high">
+        <div class="pitfall-label high">Critical</div>
+        <div class="pitfall-title">"We'll know it when we see it"</div>
+        <div class="pitfall-body">The most expensive phrase in hiring. Without a defined bar, <strong>every interviewer uses a different one</strong>. The result: inconsistent decisions, months of churn, and hires made on vibes that don't survive 90 days. The fix isn't bureaucracy — it's a single shared document per role, agreed before interviews start. Five criteria. That's it.</div>
+      </div>
+
+      <div class="pitfall-card high">
+        <div class="pitfall-label high">Critical</div>
+        <div class="pitfall-title">Speed pressure lowering the bar</div>
+        <div class="pitfall-body">A role open for 4 months creates enormous pressure to hire the best available candidate rather than the right one. The team ends up carrying a weak hire for 18 months — far more expensive than the open role. <strong>Hold the bar.</strong> Communicate clearly to the business what "right" looks like and why a near-miss is worse than a delay. This requires TA having enough credibility with founders to push back.</div>
+      </div>
+
+      <div class="pitfall-card medium">
+        <div class="pitfall-label medium">High risk</div>
+        <div class="pitfall-title">Interview process designed by committee</div>
+        <div class="pitfall-body">Engineers, left to their own devices, will design 6-round interview processes with 4-hour coding challenges. They're optimizing for certainty. Candidates with competing offers will drop. <strong>The sweet spot: 3 stages, max 4 hours total, decision within 48h of final round.</strong> Top researchers are evaluating Flexion as much as Flexion is evaluating them — the process itself is a signal about how the company operates.</div>
+      </div>
+
+      <div class="pitfall-card medium">
+        <div class="pitfall-label medium">High risk</div>
+        <div class="pitfall-title">Conference dependency</div>
+        <div class="pitfall-body">Sourcing only at ICRA or CoRL is a lagging indicator — the best candidates already have competing offers by the time they're at the conference. <strong>Conferences are relationship confirmation events, not discovery events.</strong> The pipeline needs to be built in the 6 months before through paper outreach, GitHub engagement, and warm intros. Arrive at ICRA knowing people by name, not handing out business cards.</div>
+      </div>
+
+      <div class="pitfall-card medium">
+        <div class="pitfall-label medium">High risk</div>
+        <div class="pitfall-title">"Culture fit" without definition</div>
+        <div class="pitfall-body">In a vibes-driven org, "culture fit" becomes shorthand for <strong>"reminds me of us"</strong> — which means hiring a monoculture. Worse, it's legally exposed. Replace it with "culture add": what does this person bring that we don't have? Define the operating principles explicitly (e.g. "bias to action," "direct feedback," "intellectual honesty") and evaluate against those, not against personality similarity.</div>
+      </div>
+
+      <div class="pitfall-card low">
+        <div class="pitfall-label">Watch</div>
+        <div class="pitfall-title">No onboarding = silent attrition</div>
+        <div class="pitfall-body">A researcher joins and is immediately handed a laptop and a Slack invite. Three months later they're disengaged. <strong>Onboarding is a retention tool, not an HR formality.</strong> A lightweight 30/60/90 plan — written by the hiring manager before the start date — sets expectations, creates early wins, and signals that the company actually thought about what this person should be doing.</div>
+      </div>
+
+      <div class="pitfall-card low">
+        <div class="pitfall-label">Watch</div>
+        <div class="pitfall-title">The ghost pipeline</div>
+        <div class="pitfall-body">No system for tracking past candidates means <strong>rebuilding from zero every search</strong>. Someone who was a near-miss 18 months ago might be perfect now — but if there's no record of the conversation, they don't exist. A minimal CRM (even a Notion table with name, date, context, and next touchpoint) prevents this. The robotics community is small enough that every relationship has a 70% chance of being relevant again.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CANDIDATE EXPERIENCE -->
+  <div class="scaling-section">
+    <div class="scaling-section-title">▸ Candidate experience — why it matters more here than anywhere</div>
+    <div class="scaling-intro" style="margin-bottom: 1.2rem;">
+      <p>The robotics research community is a small, dense graph. <strong>Everyone knows everyone.</strong> A researcher who has a bad experience in your interview process will mention it at the next lab meeting, conference dinner, or group chat. Conversely, a great experience — even from a declined candidate — generates referrals and ambient credibility.</p>
+    </div>
+    <ul class="principle-list">
+
+      <li class="principle-item">
+        <span class="principle-num">01</span>
+        <div class="principle-content">
+          <div class="principle-title">Single point of contact, start to finish</div>
+          <div class="principle-desc">One TA person owns the relationship — not a different recruiter at each stage. Candidates shouldn't have to re-explain their background. They should feel like someone is <strong>tracking their journey</strong>, not processing their application.</div>
+        </div>
+      </li>
+
+      <li class="principle-item">
+        <span class="principle-num">02</span>
+        <div class="principle-content">
+          <div class="principle-title">Communicate the timeline before being asked</div>
+          <div class="principle-desc">Silence after an interview is the single biggest driver of candidate drop-off. Tell them: <strong>"You'll hear from us by Thursday."</strong> Then honor it. If the decision slips, proactively communicate. Researchers are used to clear deadlines and direct communication — treat them accordingly.</div>
+        </div>
+      </li>
+
+      <li class="principle-item">
+        <span class="principle-num">03</span>
+        <div class="principle-content">
+          <div class="principle-title">Feedback to declined candidates (where possible)</div>
+          <div class="principle-desc">Most companies don't do this. Which is exactly why doing it creates outsized goodwill. Even one sentence of honest feedback — <strong>"We went with someone with more real-hardware deployment experience"</strong> — turns a rejection into a positive memory. That candidate will still recommend Flexion to colleagues.</div>
+        </div>
+      </li>
+
+      <li class="principle-item">
+        <span class="principle-num">04</span>
+        <div class="principle-content">
+          <div class="principle-title">Respect for technical time</div>
+          <div class="principle-desc">Don't ask PhD researchers to do 4-hour take-home assignments as a first filter. It signals that their time isn't valued. Use async video intros, paper-based conversations, or a short 45-minute technical screen with a senior engineer instead. <strong>The best candidates have options — the process is already a filter for how you operate.</strong></div>
+        </div>
+      </li>
+
+      <li class="principle-item">
+        <span class="principle-num">05</span>
+        <div class="principle-content">
+          <div class="principle-title">Offer experience = first day of onboarding</div>
+          <div class="principle-desc">The offer call is not a formality. It's the moment a candidate decides whether they trust the company. Come prepared: know the person's motivations, have a clear equity explanation ready, be able to answer "who will I be working with?" and "what does the first 90 days look like?" <strong>Close the offer on the call, not over three weeks of email.</strong></div>
+        </div>
+      </li>
+
+    </ul>
   </div>
 
 </div>
