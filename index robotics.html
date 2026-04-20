@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robotics Tech Stack Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080f;
+    --surface: #0d1220;
+    --surface2: #121828;
+    --border: #1e2d47;
+    --accent: #00e5ff;
+    --accent2: #ff4d6d;
+    --accent3: #a8ff78;
+    --accent4: #ffd166;
+    --text: #e0eaf8;
+    --muted: #8a9dc0;
+    --layer1: #00b4d8;
+    --layer2: #0077b6;
+    --layer3: #023e8a;
+    --layer4: #03045e;
+    --layer5: #7b2fff;
+    --r: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,229,255,0.015) 2px, rgba(0,229,255,0.015) 4px);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  header {
+    padding: 2.5rem 2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #05080f 60%, #0d1a2e);
+  }
+
+  .header-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  header h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    background: linear-gradient(90deg, #00e5ff, #a8ff78);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  header p {
+    margin-top: 0.6rem;
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  /* Tab nav */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .tab-content { display: none; padding: 2rem; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── TECH STACK DIAGRAM ── */
+  .stack-wrapper {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .stack-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .layer-row {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 0.5rem;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .layer-row:hover .layer-box { filter: brightness(1.15); transform: translateX(4px); }
+  .layer-row:hover .layer-detail { max-height: 280px; opacity: 1; }
+
+  .layer-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    width: 1.6rem;
+    padding-top: 1.1rem;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .layer-box {
+    flex: 1;
+    padding: 1rem 1.4rem;
+    border-radius: var(--r);
+    border-left: 3px solid;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.25s;
+    position: relative;
+  }
+
+  .layer-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+  .layer-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  .layer-sub {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  .layer-detail {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease;
+    background: var(--surface2);
+    border-radius: 0 0 var(--r) var(--r);
+    margin-left: 2.35rem;
+    margin-top: -0.5rem;
+    border: 1px solid var(--border);
+    border-top: none;
+  }
+
+  .layer-detail-inner {
+    padding: 1rem 1.4rem 1.2rem;
+  }
+
+  .layer-detail p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 0.6rem;
+  }
+
+  .layer-detail strong { color: var(--text); }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 3px;
+    background: rgba(0,229,255,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(0,229,255,0.25);
+    letter-spacing: 0.05em;
+  }
+
+  .tag.green { background: rgba(168,255,120,0.1); color: var(--accent3); border-color: rgba(168,255,120,0.25); }
+  .tag.red { background: rgba(255,77,109,0.1); color: var(--accent2); border-color: rgba(255,77,109,0.25); }
+  .tag.yellow { background: rgba(255,209,102,0.1); color: var(--accent4); border-color: rgba(255,209,102,0.25); }
+  .tag.purple { background: rgba(123,47,255,0.12); color: #c084fc; border-color: rgba(168,85,247,0.3); }
+
+  .click-hint {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── FOUNDERS / RESEARCH ── */
+  .founder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .founder-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .founder-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .founder-header {
+    padding: 1.2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .founder-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+    font-family: 'Space Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  .founder-name { font-weight: 700; font-size: 1.05rem; }
+  .founder-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-top: 0.15rem;
+  }
+
+  .founder-body { padding: 1.2rem; }
+  .founder-body p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
+
+  .paper-list { list-style: none; }
+  .paper-list li {
+    font-size: 0.875rem;
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    color: var(--muted);
+  }
+
+  .paper-list li::before {
+    content: '↗';
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .paper-title { color: var(--text); font-size: 0.875rem; display: block; margin-bottom: 0.1rem; }
+  .paper-venue { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--accent3); }
+
+  /* ── GLOSSARY ── */
+  .glossary-search {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 0.8rem 1rem;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .glossary-search:focus { border-color: var(--accent); }
+  .glossary-search::placeholder { color: var(--muted); }
+
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .gloss-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.2rem;
+    transition: border-color 0.2s;
+  }
+
+  .gloss-card:hover { border-color: var(--accent); }
+
+  .gloss-term {
+    font-weight: 700;
+    font-size: 0.975rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .gloss-emoji { font-size: 1rem; }
+  .gloss-def {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .gloss-card[data-hidden="true"] { display: none; }
+
+  /* ── TA BRIDGE ── */
+  .bridge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .bridge-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 1.3rem;
+  }
+
+  .bridge-q {
+    font-size: 0.875rem;
+    color: var(--accent4);
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 0.7rem;
+    font-weight: 700;
+  }
+
+  .bridge-a {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .bridge-a strong { color: var(--text); }
+
+  /* section headers */
+  .section-header {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* layer colors */
+  .l1 { background: rgba(0,180,216,0.1); border-color: var(--layer1); }
+  .l2 { background: rgba(0,119,182,0.12); border-color: var(--layer2); }
+  .l3 { background: rgba(2,62,138,0.15); border-color: var(--layer3); }
+  .l4 { background: rgba(3,4,94,0.2); border-color: var(--layer4); }
+  .l5 { background: rgba(123,47,255,0.12); border-color: var(--layer5); }
+
+  .l1 .layer-name { color: var(--layer1); }
+  .l2 .layer-name { color: #58d0f7; }
+  .l3 .layer-name { color: #74b0f5; }
+  .l4 .layer-name { color: #a0b4e8; }
+  .l5 .layer-name { color: #c084fc; }
+
+  .confidence {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent3);
+    margin-top: 0.4rem;
+  }
+
+  /* scroll track */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-label">Humanoid Robotics · AI · Autonomy</div>
+  <h1>Robotics Tech Stack Overview</h1>
+  <p>A clickable map of the humanoid robotics technology landscape. Click any layer to expand. Use tabs to explore the tech stack, team research, a glossary, and practical context.</p>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('stack')">🏗 Tech Layers</button>
+  <button class="tab-btn" onclick="showTab('founders')">🧬 Team & Research</button>
+  <button class="tab-btn" onclick="showTab('glossary')">📖 Glossary</button>
+  <button class="tab-btn" onclick="showTab('bridge')">💼 TA Bridge</button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     TAB 1 – TECH STACK
+══════════════════════════════════════════ -->
+<div id="tab-stack" class="tab-content active">
+  <div class="stack-wrapper">
+    <div class="stack-title">// Flexion Autonomy Stack — click each layer to expand</div>
+
+    <!-- Layer 5 – Task Understanding -->
+    <div class="layer-row" onclick="toggleDetail('d5')">
+      <div class="layer-num">5</div>
+      <div class="layer-box l5">
+        <div class="layer-icon">🗣️</div>
+        <div>
+          <div class="layer-name">Task Understanding (LLMs)</div>
+          <div class="layer-sub">Language → Intent → Action plan</div>
+        </div>
+      </div>
+    </div>
+    <div id="d5" class="layer-detail">
+      <div class="layer-detail-inner">
+        <p><strong>What it is:</strong> The robot listens to a spoken or typed instruction — "pick up the red box and put it on the shelf" — and converts it into a plan it can act on. This is done by large language models (LLMs), the same underlying technology as ChatGPT.</p>
+        <p><strong>Why it matters at Flexion:</strong> Flexion's platform is described as combining <em>"natural language task comprehension"</em> as the top layer, so the robot doesn't need to be manually reprogrammed for every new job. A warehouse worker can just tell it what to do.</p>
+        <p><strong>What PhDs might ask about:</strong> Prompt engineering for robotic planning, chain-of-thought reasoning, grounding language in physical actions (called "language grounding").</p>
+        <div class="tags">
+          <span class="tag purple">LLM</span>
+          <span class="tag purple">Instruction Following</span>
+          <span class="tag purple">Language Grounding</span>
+          <span class="tag purple">Task Planning</span>
+        </div>
+        <div class="confidence">Confidence in accuracy: ~92% · Based on Flexion public press + EU-Startups Nov 2025 article</div>
+      </div>
+    </div>
+
+    <!-- Layer 4 – Vision-Language-Action -->
+    <div class="layer-row" onclick="toggleDetail('d4')">
+      <div class="layer-num">4</div>
+      <div class="layer-box l4">
+        <div class="layer-icon">👁️</div>
+        <div>
+          <div class="layer-name">Vision-Language-Action (VLA) Models</div>
+          <div class="layer-sub">Seeing the world + turning it into movement</div>
+        </div>
+      </div>
+    </div>
+    <div id="d4" class="layer-detail">
+      <div class="layer-detail-inner">
+        <p><strong>What it is:</strong> VLA models are AI models that take in <em>visual input</em> (what cameras see), <em>language context</em> (what the robot has been told), and output <em>actions</em> (move arm left, close gripper). It's the bridge between understanding and movement.</p>
+        <p><strong>Ayça Takmaz's expertise lives here.</strong> Her PhD work (ETH Zurich / Google / NVIDIA) focused on 3D scene understanding — teaching computers to understand what objects are, where they are in 3D space, and what they can be used for (called "affordance understanding"). Her paper <em>OpenMask3D</em> allows robots to identify any object by description, not just a fixed list.</p>
+        <p><strong>Synthetic training data:</strong> Flexion trains these models inside simulators, generating huge amounts of fake-but-realistic data, rather than relying on expensive real-world demonstrations. This is a key differentiator.</p>
+        <div class="tags">
+          <span class="tag">VLA</span>
+          <span class="tag">3D Scene Understanding</span>
+          <span class="tag">Open-Vocabulary Detection</span>
+          <span class="tag green">Synthetic Data</span>
+          <span class="tag green">Sim-to-Real</span>
+        </div>
+        <div class="confidence">Confidence: ~95% · Directly sourced from Ayça Takmaz's Google Scholar + Flexion about page</div>
+      </div>
+    </div>
+
+    <!-- Layer 3 – Reinforcement Learning -->
+    <div class="layer-row" onclick="toggleDetail('d3')">
+      <div class="layer-num">3</div>
+      <div class="layer-box l3">
+        <div class="layer-icon">🧠</div>
+        <div>
+          <div class="layer-name">Reinforcement Learning (RL)</div>
+          <div class="layer-sub">Learning through trial and error — at massive scale</div>
+        </div>
+      </div>
+    </div>
+    <div id="d3" class="layer-detail">
+      <div class="layer-detail-inner">
+        <p><strong>What it is:</strong> Instead of being programmed with rules ("if obstacle, turn left"), the robot is rewarded for good outcomes and penalized for bad ones — and it figures out the rules itself. Think of teaching a dog: you don't explain physics, you give treats.</p>
+        <p><strong>Nikita Rudin's breakthrough paper</strong> <em>"Learning to Walk in Minutes"</em> (CoRL 2022, 1,150+ citations) showed that training thousands of robots <em>simultaneously in simulation</em> on a single GPU could compress months of training into minutes. This is the core of Flexion's speed advantage — they call it "massively parallel RL."</p>
+        <p><strong>David Hoeller</strong> extended this: his <em>ANYmal Parkour</em> paper (Science Robotics 2024) showed RL-trained robots can do athletic, agile movements — jumping, climbing — behaviors once thought impossible to program manually.</p>
+        <div class="tags">
+          <span class="tag red">Deep RL</span>
+          <span class="tag red">Massively Parallel Training</span>
+          <span class="tag red">Policy Learning</span>
+          <span class="tag red">Curriculum Learning</span>
+          <span class="tag red">Isaac Gym / Isaac Lab</span>
+        </div>
+        <div class="confidence">Confidence: ~98% · Directly from Rudin et al. 2022 (arXiv 2109.11978) and Hoeller et al. Science Robotics 2024</div>
+      </div>
+    </div>
+
+    <!-- Layer 2 – Sim-to-Real + Whole-Body Control -->
+    <div class="layer-row" onclick="toggleDetail('d2')">
+      <div class="layer-num">2</div>
+      <div class="layer-box l2">
+        <div class="layer-icon">🤖</div>
+        <div>
+          <div class="layer-name">Whole-Body Control (Transformer-Based)</div>
+          <div class="layer-sub">Coordinating all limbs simultaneously</div>
+        </div>
+      </div>
+    </div>
+    <div id="d2" class="layer-detail">
+      <div class="layer-detail-inner">
+        <p><strong>What it is:</strong> A humanoid robot has ~30+ joints. Whole-body control means coordinating all of them at once, not just the arm or just the legs. A transformer (the same architecture behind GPT) processes all joint states together and outputs a coherent motion plan.</p>
+        <p><strong>The sim-to-real problem:</strong> Physics in simulation is never 100% identical to the real world. Flexion specializes in making models trained in simulation transfer reliably to real hardware — Nikita Rudin's research specifically addressed this by training across randomized simulation conditions so the robot becomes robust to real-world variation.</p>
+        <p><strong>Julian Nubert</strong> bridges into this: his work on <em>state estimation</em> and LiDAR-based localization gives the robot an accurate, real-time sense of where it and objects around it are — essential for whole-body control to work safely.</p>
+        <div class="tags">
+          <span class="tag">Whole-Body Control</span>
+          <span class="tag">Transformer Architecture</span>
+          <span class="tag yellow">Sim-to-Real Transfer</span>
+          <span class="tag yellow">Domain Randomization</span>
+          <span class="tag yellow">State Estimation</span>
+        </div>
+        <div class="confidence">Confidence: ~93% · Based on Flexion platform description + ETH RSL research direction</div>
+      </div>
+    </div>
+
+    <!-- Layer 1 – Perception -->
+    <div class="layer-row" onclick="toggleDetail('d1')">
+      <div class="layer-num">1</div>
+      <div class="layer-box l1">
+        <div class="layer-icon">📡</div>
+        <div>
+          <div class="layer-name">Perception & Mapping (LiDAR + Vision)</div>
+          <div class="layer-sub">Sensing the physical world in 3D</div>
+        </div>
+      </div>
+    </div>
+    <div id="d1" class="layer-detail">
+      <div class="layer-detail-inner">
+        <p><strong>What it is:</strong> Before the robot can do anything, it needs to know where it is and what's around it. LiDAR (laser-based distance sensors) creates a precise 3D point cloud of the environment. SLAM (Simultaneous Localization and Mapping) uses that data to build a live map and track the robot's position within it — simultaneously.</p>
+        <p><strong>Julian Nubert</strong> is Flexion's perception lead. His PhD research produced papers on self-supervised LiDAR odometry and localizability estimation — essentially: "when can the robot trust its own position estimate, and when should it be cautious?" This is critical safety-adjacent work for real-world deployment.</p>
+        <p><strong>Ayça Takmaz</strong> adds the object layer: her <em>SceneFun3D</em> (CVPR 2024, Oral — a top honor) enables robots to understand not just that an object exists, but what actions it affords — is it a handle? A surface to place things on?</p>
+        <div class="tags">
+          <span class="tag green">LiDAR</span>
+          <span class="tag green">SLAM</span>
+          <span class="tag green">Point Cloud</span>
+          <span class="tag green">Odometry</span>
+          <span class="tag green">3D Segmentation</span>
+          <span class="tag green">Affordance Detection</span>
+        </div>
+        <div class="confidence">Confidence: ~96% · Sourced from Nubert Google Scholar + Takmaz academic page + Flexion about page</div>
+      </div>
+    </div>
+
+    <p class="click-hint">▲ Click any layer to expand / collapse details</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 2 – FOUNDERS & RESEARCH
+══════════════════════════════════════════ -->
+<div id="tab-founders" class="tab-content">
+  <div class="section-header">// Founding Team & Key Research</div>
+  <div class="founder-grid">
+
+    <!-- Nikita Rudin -->
+    <div class="founder-card">
+      <div class="founder-header">
+        <div class="founder-avatar" style="background: rgba(0,229,255,0.15); color: var(--accent);">NR</div>
+        <div>
+          <div class="founder-name">Nikita Rudin</div>
+          <div class="founder-role">CEO & Co-Founder · ETH Zurich + NVIDIA</div>
+        </div>
+      </div>
+      <div class="founder-body">
+        <p>Nikita's core innovation is speed: he developed massively parallel reinforcement learning for robots, allowing thousands of virtual robots to train simultaneously on a single GPU. What once took months now takes minutes. This became the basis of NVIDIA's Isaac Lab — the industry-standard tool for robot RL training.</p>
+        <ul class="paper-list">
+          <li>
+            <div>
+              <span class="paper-title">"Learning to Walk in Minutes Using Massively Parallel Deep RL"</span>
+              <span class="paper-venue">CoRL 2022 · 1,150+ citations</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">In plain terms: a recipe for training robots faster than ever, by running thousands of robot simulations at once on one computer chip.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="paper-title">"Advanced Skills by Learning Locomotion and Local Navigation End-to-End"</span>
+              <span class="paper-venue">IROS 2022 · with Hoeller, Bjelonic, Hutter</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">Teaching a robot to navigate an obstacle course without pre-planned paths — it figures out the best route itself.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="paper-title">"Learning Agile Locomotion on Risky Terrains"</span>
+              <span class="paper-venue">ICRA 2024 · with Zhang, Hoeller, Hutter</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">Robots crossing stepping stones — learning to place feet precisely on sparse, dangerous footholds using RL.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- David Hoeller -->
+    <div class="founder-card">
+      <div class="founder-header">
+        <div class="founder-avatar" style="background: rgba(0,119,182,0.2); color: #58d0f7;">DH</div>
+        <div>
+          <div class="founder-name">David Hoeller</div>
+          <div class="founder-role">CTO & Co-Founder · ETH PhD + NVIDIA Research Manager</div>
+        </div>
+      </div>
+      <div class="founder-body">
+        <p>David specializes in representation learning for robot movement — teaching robots to understand their environment well enough to do athletic, complex maneuvers. His PhD at ETH focused on robots that navigate and move like athletes. He also co-led development of NVIDIA's Isaac simulation tools.</p>
+        <ul class="paper-list">
+          <li>
+            <div>
+              <span class="paper-title">"ANYmal Parkour: Learning Agile Navigation for Quadrupedal Robots"</span>
+              <span class="paper-venue">Science Robotics 2024 — top robotics journal</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">A four-legged robot learning to jump, duck, and vault over obstacles — the "parkour robot" you may have seen go viral. Trained entirely in simulation, transferred to reality.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="paper-title">Isaac Lab / Isaac Gym</span>
+              <span class="paper-venue">NVIDIA Tools · Industry Standard</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">Not a paper but a platform — co-built by David at NVIDIA, this is the simulator most robotics companies worldwide now use to train robots. Flexion uses and contributes to it.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Julian Nubert -->
+    <div class="founder-card">
+      <div class="founder-header">
+        <div class="founder-avatar" style="background: rgba(168,255,120,0.1); color: var(--accent3);">JN</div>
+        <div>
+          <div class="founder-name">Julian Nubert</div>
+          <div class="founder-role">Co-Founder & Perception Lead · ETH PhD + NASA JPL + Meta</div>
+        </div>
+      </div>
+      <div class="founder-body">
+        <p>Julian is the robot's "eyes and spatial awareness." His research covers how robots know where they are and what surrounds them — using laser sensors (LiDAR) and machine learning. His work went from ETH to NASA's Jet Propulsion Laboratory (rovers!) to Meta Reality Labs, and now powers Flexion's perception stack.</p>
+        <ul class="paper-list">
+          <li>
+            <div>
+              <span class="paper-title">"Self-supervised Learning of LiDAR Odometry for Robotic Applications"</span>
+              <span class="paper-venue">ICRA 2020</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">Teaching a robot to understand its own movement from laser scan data, without needing human-labeled training examples.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="paper-title">"Learning-based Localizability Estimation for Robust LiDAR Localization"</span>
+              <span class="paper-venue">IROS 2022 · Best Student Paper Finalist</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">Giving the robot a "confidence check" — knowing when it can trust its location estimate and when the environment is too geometrically confusing (e.g. a tunnel). Safety-critical for deployment.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="paper-title">"Continuous-Time State Estimation Methods in Robotics: A Survey"</span>
+              <span class="paper-venue">2024 · ETH RSL</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">A comprehensive survey of how robots continuously estimate their own position in time — foundational for smooth, real-time movement.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Ayca Takmaz -->
+    <div class="founder-card">
+      <div class="founder-header">
+        <div class="founder-avatar" style="background: rgba(255,77,109,0.12); color: var(--accent2);">AT</div>
+        <div>
+          <div class="founder-name">Ayça Takmaz</div>
+          <div class="founder-role">Researcher · ETH PhD + Google + NVIDIA</div>
+        </div>
+      </div>
+      <div class="founder-body">
+        <p>Ayça's work teaches computers to understand 3D space the way humans do — not just "there's an object" but "what kind of object, where exactly in 3D, what can I do with it?" This is the visual intelligence layer that makes VLA models work. She brings open-vocabulary vision: the robot can identify <em>any</em> object described in words, not just ones it was trained on.</p>
+        <ul class="paper-list">
+          <li>
+            <div>
+              <span class="paper-title">"OpenMask3D: Open-Vocabulary 3D Instance Segmentation"</span>
+              <span class="paper-venue">NeurIPS 2023</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">Ask a robot "where is the blue mug?" — even if it has never specifically learned "blue mug." It identifies it from the description using CLIP embeddings on 3D point clouds.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="paper-title">"SceneFun3D: Fine-Grained Functionality and Affordance Understanding"</span>
+              <span class="paper-venue">CVPR 2024 · Oral (top ~2% of submissions)</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">Not just "that's a door handle" — but understanding that the handle can be grasped and pulled in a certain direction. Critical for robot manipulation.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="paper-title">"Search3D: Hierarchical Open-Vocabulary 3D Segmentation"</span>
+              <span class="paper-venue">RA-L 2025</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">Searching through a 3D environment using language descriptions — enabling robots to find objects through natural queries.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Marco Hutter -->
+    <div class="founder-card">
+      <div class="founder-header">
+        <div class="founder-avatar" style="background: rgba(123,47,255,0.15); color: #c084fc;">MH</div>
+        <div>
+          <div class="founder-name">Marco Hutter</div>
+          <div class="founder-role">Scientific Advisor & Co-Founder · ETH Full Professor</div>
+        </div>
+      </div>
+      <div class="founder-body">
+        <p>Marco Hutter is the ETH professor who supervised Nikita, David, Julian, and Fabian. He runs the Robotic Systems Lab (RSL) at ETH — ground zero for legged robotics research in Europe. Creator of the ANYmal robot. He's the scientific anchor of Flexion, bridging academic research and the company's technical roadmap.</p>
+        <ul class="paper-list">
+          <li>
+            <div>
+              <span class="paper-title">Robotic Systems Lab (RSL) — ETH Zurich</span>
+              <span class="paper-venue">Director · 200+ publications in legged robotics</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">The lab that trained all 4 co-founders. Their research in quadruped locomotion directly underpins Flexion's humanoid platform.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Fabian Tischhauser -->
+    <div class="founder-card">
+      <div class="founder-header">
+        <div class="founder-avatar" style="background: rgba(255,209,102,0.1); color: var(--accent4);">FT</div>
+        <div>
+          <div class="founder-name">Fabian Tischhauser</div>
+          <div class="founder-role">Co-Founder & Hardware Lead · ETH RSL</div>
+        </div>
+      </div>
+      <div class="founder-body">
+        <p>Fabian leads the hardware side — making sure the physical robots Flexion's software runs on are set up, calibrated, and operational. His background at RSL covers robotics hardware platforms across multiple robot types. He is the bridge between the software stack and the physical machines in the lab.</p>
+        <ul class="paper-list">
+          <li>
+            <div>
+              <span class="paper-title">Hardware & Platform Engineering</span>
+              <span class="paper-venue">RSL ETH · multiple robotic platforms</span>
+              <span style="font-size:0.75rem; color: var(--muted); display:block; margin-top:0.2rem;">Less publicly visible research, more applied engineering — ensuring the robots don't break when the software tells them to do hard things.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 3 – GLOSSARY
+══════════════════════════════════════════ -->
+<div id="tab-glossary" class="tab-content">
+  <div class="section-header">// Plain-English Technical Glossary</div>
+  <input type="text" class="glossary-search" placeholder="Search terms…" oninput="filterGlossary(this.value)" />
+  <div class="glossary-grid" id="glossary-grid">
+
+    <div class="gloss-card" data-term="reinforcement learning rl">
+      <div class="gloss-term"><span class="gloss-emoji">🎮</span> Reinforcement Learning (RL)</div>
+      <div class="gloss-def">A way to train AI by giving rewards for good behavior and penalties for bad behavior — like training an animal. The robot doesn't get told what to do; it figures it out through millions of trial-and-error attempts in simulation.</div>
+    </div>
+
+    <div class="gloss-card" data-term="sim-to-real simulation transfer">
+      <div class="gloss-term"><span class="gloss-emoji">🌉</span> Sim-to-Real Transfer</div>
+      <div class="gloss-def">Training a robot inside a virtual simulation (cheaper, faster, safe), then deploying that training on a real physical robot. The challenge: simulation is never a perfect copy of reality. Flexion's key skill is making this transfer reliable.</div>
+    </div>
+
+    <div class="gloss-card" data-term="lidar laser mapping slam">
+      <div class="gloss-term"><span class="gloss-emoji">📡</span> LiDAR</div>
+      <div class="gloss-def">Light Detection and Ranging. A sensor that fires laser pulses and measures how long they take to bounce back, creating a precise 3D map of the environment (called a "point cloud"). Like radar but with light and much higher resolution.</div>
+    </div>
+
+    <div class="gloss-card" data-term="slam localization mapping">
+      <div class="gloss-term"><span class="gloss-emoji">🗺️</span> SLAM</div>
+      <div class="gloss-def">Simultaneous Localization and Mapping. The robot builds a map of its environment while simultaneously figuring out where it is within that map — at the same time. This is hard because you need the map to know where you are, but you need to know where you are to build the map.</div>
+    </div>
+
+    <div class="gloss-card" data-term="transformer architecture neural network attention">
+      <div class="gloss-term"><span class="gloss-emoji">🧮</span> Transformer Architecture</div>
+      <div class="gloss-def">The neural network architecture behind GPT, BERT, and most modern AI. It processes all parts of an input simultaneously using "attention" — figuring out which parts matter most for a given output. Flexion uses transformers for both language understanding and whole-body robot control.</div>
+    </div>
+
+    <div class="gloss-card" data-term="vla vision language action model">
+      <div class="gloss-term"><span class="gloss-emoji">🔗</span> Vision-Language-Action (VLA) Model</div>
+      <div class="gloss-def">An AI model that takes in visual data (camera images), language instructions, and outputs physical actions. It's the three-way bridge: see the world, understand the instruction, move the body. Key to Flexion's approach.</div>
+    </div>
+
+    <div class="gloss-card" data-term="point cloud 3d perception depth">
+      <div class="gloss-term"><span class="gloss-emoji">☁️</span> Point Cloud</div>
+      <div class="gloss-def">A collection of millions of 3D data points (x, y, z coordinates) representing the surface of objects in space. LiDAR sensors produce point clouds. Julian Nubert and Ayça Takmaz both work with point cloud data to help robots perceive their environment.</div>
+    </div>
+
+    <div class="gloss-card" data-term="policy locomotion control behavior">
+      <div class="gloss-term"><span class="gloss-emoji">📋</span> Policy (in RL)</div>
+      <div class="gloss-def">The "brain" of a trained robot — the set of rules it has learned for deciding what action to take in any given situation. A locomotion policy controls how the robot walks. A manipulation policy controls how it grasps objects.</div>
+    </div>
+
+    <div class="gloss-card" data-term="whole body control wbc humanoid joints">
+      <div class="gloss-term"><span class="gloss-emoji">🤸</span> Whole-Body Control (WBC)</div>
+      <div class="gloss-def">Coordinating all of a robot's joints — arms, legs, torso, hands — at the same time to achieve a task. Rather than controlling each limb separately, WBC treats the entire body as one system. Essential for humanoid robots doing real work.</div>
+    </div>
+
+    <div class="gloss-card" data-term="synthetic data training dataset generation">
+      <div class="gloss-term"><span class="gloss-emoji">🏭</span> Synthetic Data</div>
+      <div class="gloss-def">Artificially generated training data created inside simulators rather than collected in the real world. Cheaper, scalable, controllable. Flexion's key advantage: generating huge amounts of synthetic data in simulation to train robust models without expensive real-world data collection.</div>
+    </div>
+
+    <div class="gloss-card" data-term="open vocabulary clip zero shot recognition">
+      <div class="gloss-term"><span class="gloss-emoji">🔓</span> Open-Vocabulary Detection</div>
+      <div class="gloss-def">A robot or AI that can identify any object described in words — not just a fixed list it was trained on. Uses large vision-language models like CLIP. Ayça Takmaz's OpenMask3D enables this in 3D space.</div>
+    </div>
+
+    <div class="gloss-card" data-term="affordance what can you do with object manipulation">
+      <div class="gloss-term"><span class="gloss-emoji">🖐️</span> Affordance Understanding</div>
+      <div class="gloss-def">Understanding what actions an object enables — a handle affords grasping, a surface affords placing. Critical for robot manipulation. Ayça Takmaz's SceneFun3D specifically tackled this problem: not just identifying objects, but what the robot can DO with them.</div>
+    </div>
+
+    <div class="gloss-card" data-term="massively parallel gpu compute scale">
+      <div class="gloss-term"><span class="gloss-emoji">⚡</span> Massively Parallel RL</div>
+      <div class="gloss-def">Running thousands of robot simulations simultaneously on a single GPU, each learning from its own trial-and-error. Nikita Rudin's key innovation: this compresses months of training into minutes. The robot effectively experiences thousands of lifetimes of practice simultaneously.</div>
+    </div>
+
+    <div class="gloss-card" data-term="isaac gym lab nvidia simulation platform">
+      <div class="gloss-term"><span class="gloss-emoji">🏋️</span> Isaac Gym / Isaac Lab</div>
+      <div class="gloss-def">NVIDIA's simulation platform for robot reinforcement learning training. Co-developed by David Hoeller at NVIDIA. Now the industry standard — most robotics companies worldwide use it. Flexion's training pipelines are built on top of this.</div>
+    </div>
+
+    <div class="gloss-card" data-term="domain randomization robustness noise variation">
+      <div class="gloss-term"><span class="gloss-emoji">🎲</span> Domain Randomization</div>
+      <div class="gloss-def">During simulation training, randomly varying conditions — floor friction, lighting, object weights, sensor noise — so the robot learns to cope with uncertainty. When transferred to reality, the real-world variation falls within what it has already seen (in randomized form). Makes sim-to-real transfer much more reliable.</div>
+    </div>
+
+    <div class="gloss-card" data-term="llm large language model gpt instruction following">
+      <div class="gloss-term"><span class="gloss-emoji">💬</span> LLM (Large Language Model)</div>
+      <div class="gloss-def">AI models trained on vast amounts of text, capable of understanding and generating language. In robotics, they're used to interpret task instructions ("sort these boxes by color") and turn them into structured plans the robot can execute. The "brain" that understands what you want.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 4 – TA BRIDGE
+══════════════════════════════════════════ -->
+<div id="tab-bridge" class="tab-content">
+  <div class="section-header">// Bridging Technical Knowledge into TA Practice</div>
+  <div class="bridge-grid">
+
+    <div class="bridge-card">
+      <div class="bridge-q">Q: Why does a TA person need to understand RL and sim-to-real?</div>
+      <div class="bridge-a">To assess candidates credibly and write accurate job descriptions. If a role requires <strong>"experience with sim-to-real transfer,"</strong> understanding what that means lets you screen CVs, ask meaningful follow-up questions, and know why a researcher from NVIDIA Isaac Lab is more relevant than one from a pure software ML background. <strong>Confidence as TA improves dramatically when you can hold a 5-minute technical conversation.</strong></div>
+    </div>
+
+    <div class="bridge-card">
+      <div class="bridge-q">Q: How do you source PhDs in this niche?</div>
+      <div class="bridge-a">Target specific labs: <strong>ETH RSL (Marco Hutter), CMU Robotics, MIT CSAIL, Berkeley BAIR, Stanford AI Lab, TU Berlin.</strong> Search by paper venue: ICRA, IROS, CoRL, NeurIPS, CVPR. On LinkedIn, filter by keywords like "reinforcement learning locomotion," "sim-to-real," "legged robotics," "manipulation policy." Conference attendee lists (ICRA has public programs) are goldmines. GitHub stars on repos like legged_gym or Isaac Lab can reveal active researchers.</div>
+    </div>
+
+    <div class="bridge-card">
+      <div class="bridge-q">Q: What signals differentiate a strong robotics RL researcher from a weak one?</div>
+      <div class="bridge-a"><strong>Strong signals:</strong> Published in Science Robotics, ICRA, CoRL, or NeurIPS. Code on GitHub with stars. "Sim-to-real" experience — not just simulation. Work with real hardware. First or second author on papers (not just a large team). Contributed to open-source tools (Isaac Lab, legged_gym, Open3D SLAM). <strong>Weak signals:</strong> Only pure ML with no robotics application. No real hardware experience. Only industry roles without research output.</div>
+    </div>
+
+    <div class="bridge-card">
+      <div class="bridge-q">Q: What makes Flexion's talent needs unusual vs. a typical tech startup?</div>
+      <div class="bridge-a">The talent pool is extremely small. Qualified candidates worldwide who have <strong>sim-to-real RL + humanoid robot experience + real hardware deployment</strong> likely number in the hundreds globally. This is not a Boolean LinkedIn search. It requires relationship-based sourcing, conference presence, and working closely with the founders who personally know most senior candidates. Standard TA pipelines won't work — the role demands a research community understanding.</div>
+    </div>
+
+    <div class="bridge-card">
+      <div class="bridge-q">Q: A PhD asks you "what's your opinion on using model-based vs. learning-based control?" — how do you respond?</div>
+      <div class="bridge-a">Acknowledge it's an active debate in the field. Mention that Flexion's approach is RL-centric — which is why they value candidates who've worked with sim-to-real pipelines. Note that the ETH RSL (where the founders came from) historically blended both but Flexion is betting on <strong>end-to-end learned control at scale.</strong> Then genuinely ask their perspective — great candidates love explaining this and it builds instant credibility.</div>
+    </div>
+
+    <div class="bridge-card">
+      <div class="bridge-q">Q: How do you explain Flexion's value proposition to a passive candidate who doesn't know them?</div>
+      <div class="bridge-a"><strong>"Flexion is building the software brain for humanoid robots — not the hardware, the intelligence stack."</strong> The founders co-created NVIDIA Isaac Lab, the simulation tool the entire industry trains on. They're funded by NVentures (NVIDIA's VC arm), DST Global, and Prosus — $57M+ Series A. They've already deployed sim-trained locomotion on real humanoid robots. This is the Zurich team most likely to define how humanoids are programmed for the next decade. That's the hook for a researcher who wants impact.</div>
+    </div>
+
+    <div class="bridge-card">
+      <div class="bridge-q">Q: What should a recruiter know before screening a robotics RL researcher?</div>
+      <div class="bridge-a">Read their papers — at least the abstract and introduction. Know the difference between quadruped work (4-legged, Flexion's research background) and humanoid work (2-legged, their current target). Ask about sim-to-real gaps: <strong>"What was the biggest transfer failure you experienced, and how did you address it?"</strong> Ask about compute scale: <strong>"What training infrastructure did you use?"</strong> These two questions will reveal depth quickly.</div>
+    </div>
+
+    <div class="bridge-card">
+      <div class="bridge-q">Q: How does Flexion's tech position affect employer branding?</div>
+      <div class="bridge-a">The NVIDIA-ETH-Science Robotics pedigree of the founders is an <strong>elite signal</strong> in the robotics community. Branding should lean into: access to state-of-the-art compute, real hardware deployment (not just simulation), ETH co-founder network, and the rare opportunity to work on full-stack humanoid autonomy — not just one layer. Candidates from academic labs often want their work to reach the real world. That's Flexion's pitch.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function toggleDetail(id) {
+    const el = document.getElementById(id);
+    if (el.style.maxHeight && el.style.maxHeight !== '0px') {
+      el.style.maxHeight = '0px';
+      el.style.opacity = '0';
+    } else {
+      el.style.maxHeight = el.scrollHeight + 'px';
+      el.style.opacity = '1';
+      el.style.transition = 'max-height 0.35s ease, opacity 0.25s ease';
+    }
+  }
+
+  // Override CSS hover with JS click toggle for layer details
+  document.querySelectorAll('.layer-detail').forEach(d => {
+    d.style.maxHeight = '0px';
+    d.style.opacity = '0';
+    d.style.transition = 'max-height 0.35s ease, opacity 0.25s ease';
+  });
+
+  function filterGlossary(query) {
+    const q = query.toLowerCase();
+    document.querySelectorAll('#glossary-grid .gloss-card').forEach(card => {
+      const term = card.getAttribute('data-term');
+      const text = card.textContent.toLowerCase();
+      card.setAttribute('data-hidden', (!term.includes(q) && !text.includes(q)) ? 'true' : 'false');
+    });
+  }
+</script>
+
+</body>
+</html>
